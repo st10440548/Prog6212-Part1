@@ -1,0 +1,21 @@
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+<h2>Submit Claim (Prototype)</h2>
+<form>
+    <label>Programme</label><br/>
+    <select><option>Programme A</option><option>Programme B</option></select><br/>
+    <label>Notes</label><br/>
+    <textarea rows="3"></textarea><br/>
+    <h3>Claim Items</h3>
+    <table>
+        <thead><tr><th>Description</th><th>Category</th><th>Amount</th></tr></thead>
+        <tbody>
+            <tr><td><input/></td><td><input/></td><td><input/></td></tr>
+            <tr><td><input/></td><td><input/></td><td><input/></td></tr>
+        </tbody>
+    </table>
+    <h3>Supporting Documents</h3>
+    <input type="file" multiple disabled/> <!-- visual only -->
+    <br/><br/>
+    <button type="button">Submit Claim</button>
+</form>
+<p><small>Note: This button is non-functional in the prototype.</small></p>

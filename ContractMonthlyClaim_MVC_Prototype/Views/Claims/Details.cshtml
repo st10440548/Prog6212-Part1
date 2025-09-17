@@ -1,0 +1,18 @@
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+<h2>Claim Details - @ViewBag.ClaimId</h2>
+<section>
+    <h3>Summary</h3>
+    <p>Claim ID: @ViewBag.ClaimId</p>
+    <p>Submitted: 2025-09-01</p>
+    <p>Total: R1,200.00</p>
+    <p>Status: Submitted</p>
+    <h3>Timeline</h3>
+    <ul>
+        <li>2025-09-01 - Submitted by Lecturer</li>
+        <li>2025-09-02 - Verified by Coordinator</li>
+    </ul>
+    <h3>Documents</h3>
+    <ul><li>invoice.pdf (visual only)</li></ul>
+    <h3>Audit Log</h3>
+    <ul><li>2025-09-01 - Claim created</li></ul>
+</section>
