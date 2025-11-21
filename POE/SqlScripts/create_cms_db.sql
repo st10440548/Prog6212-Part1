@@ -1,0 +1,45 @@
+-- SQL Server script to create CMS_DB and tables
+CREATE DATABASE CMS_DB;
+GO
+USE CMS_DB;
+GO
+CREATE TABLE Lecturers (
+    LecturerId INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(200) NOT NULL,
+    Email NVARCHAR(200) NOT NULL,
+    Department NVARCHAR(100)
+);
+
+CREATE TABLE Claims (
+    ClaimId INT IDENTITY(1,1) PRIMARY KEY,
+    LecturerId INT NOT NULL FOREIGN KEY REFERENCES Lecturers(LecturerId),
+    HoursWorked DECIMAL(10,2) NOT NULL,
+    HourlyRate DECIMAL(10,2) NOT NULL,
+    Notes NVARCHAR(MAX),
+    Status NVARCHAR(50) DEFAULT 'Pending',
+    SubmissionDate DATETIME2 DEFAULT SYSUTCDATETIME()
+);
+
+CREATE TABLE SupportingDocuments (
+    SupportingDocumentId INT IDENTITY(1,1) PRIMARY KEY,
+    ClaimId INT NOT NULL FOREIGN KEY REFERENCES Claims(ClaimId),
+    FileName NVARCHAR(500),
+    FilePath NVARCHAR(1000),
+    UploadDate DATETIME2 DEFAULT SYSUTCDATETIME()
+);
+
+CREATE TABLE Approvals (
+    ApprovalId INT IDENTITY(1,1) PRIMARY KEY,
+    ClaimId INT NOT NULL FOREIGN KEY REFERENCES Claims(ClaimId),
+    ApprovedBy NVARCHAR(200),
+    ApprovalDate DATETIME2 DEFAULT SYSUTCDATETIME(),
+    Decision NVARCHAR(50),
+    Notes NVARCHAR(MAX)
+);
+
+CREATE TABLE Users (
+    UserId INT IDENTITY(1,1) PRIMARY KEY,
+    Username NVARCHAR(200) NOT NULL,
+    Role NVARCHAR(50) NOT NULL,
+    PasswordHash NVARCHAR(500)
+);

@@ -1,0 +1,56 @@
+@model CMS.Models.Claim
+@{
+    ViewData["Title"] = "Submit Claim";
+}
+<h2>Submit Claim</h2>
+<form asp-action="Submit" method="post" enctype="multipart/form-data" id="claimForm">
+    <div>
+        <label>Lecturer ID</label>
+        <input asp-for="LecturerId" type="number" required />
+    </div>
+    <div>
+        <label>Hours Worked</label>
+        <input asp-for="HoursWorked" id="hours" required />
+    </div>
+    <div>
+        <label>Hourly Rate</label>
+        <input asp-for="HourlyRate" id="rate" required />
+    </div>
+    <div>
+        <label>Total Amount</label>
+        <input id="total" readonly />
+    </div>
+    <div>
+        <label>Notes</label>
+        <textarea asp-for="Notes"></textarea>
+    </div>
+    <div>
+        <label>Supporting Document (PDF/DOCX/XLSX)</label>
+        <input type="file" name="file" accept=".pdf,.docx,.xlsx" />
+    </div>
+    <button type="submit">Submit Claim</button>
+</form>
+
+@section Scripts {
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(function(){
+    function calc(){ 
+        var h = parseFloat($('#hours').val()) || 0;
+        var r = parseFloat($('#rate').val()) || 0;
+        var total = h * r;
+        $('#total').val(total.toFixed(2));
+    }
+    $('#hours, #rate').on('input', calc);
+    // client-side validation example
+    $('#claimForm').on('submit', function(e){
+        var h = parseFloat($('#hours').val()) || 0;
+        var r = parseFloat($('#rate').val()) || 0;
+        if (h <= 0 || r <= 0) {
+            alert('Hours and Rate must be positive numbers.');
+            e.preventDefault();
+        }
+    });
+});
+</script>
+}

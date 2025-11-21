@@ -1,0 +1,36 @@
+@model IEnumerable<CMS.Models.Claim>
+@{
+    ViewData["Title"] = "Pending Claims";
+    var maxHours = ViewBag.MaxHours;
+    var maxRate = ViewBag.MaxRate;
+}
+<h2>Pending Claims</h2>
+<p>Policy: MaxHours = @maxHours, MaxRate = @maxRate</p>
+<table>
+    <thead><tr><th>ID</th><th>LecturerID</th><th>Hours</th><th>Rate</th><th>Total</th><th>PolicyFlag</th><th>Action</th></tr></thead>
+    <tbody>
+    @foreach(var c in Model)
+    {
+        var flag = (c.HoursWorked > maxHours || c.HourlyRate > maxRate) ? "YES" : "NO";
+        <tr>
+            <td>@c.ClaimId</td>
+            <td>@c.LecturerId</td>
+            <td>@c.HoursWorked</td>
+            <td>@c.HourlyRate</td>
+            <td>@c.TotalAmount</td>
+            <td>@flag</td>
+            <td>
+                <form asp-action="Approve" method="post" style="display:inline">
+                    <input type="hidden" name="id" value="@c.ClaimId" />
+                    <button type="submit">Approve</button>
+                </form>
+                <form asp-action="Reject" method="post" style="display:inline">
+                    <input type="hidden" name="id" value="@c.ClaimId" />
+                    <input type="text" name="notes" placeholder="Notes (optional)" />
+                    <button type="submit">Reject</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
